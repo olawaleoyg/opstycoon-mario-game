@@ -34,3 +34,9 @@ override.tf.json
 terraform.rc
 .terraform
 .DS_Store
+
+**/venv
+**/.terraform
+**/zzz.txt
+**/.DS_Store
+
