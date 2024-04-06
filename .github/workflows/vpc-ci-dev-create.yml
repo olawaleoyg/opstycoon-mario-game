@@ -7,7 +7,7 @@ on:
       - "iac/terraform/vpc/*"
     #   - "iac/terraform/vpc/dev/**"
 env:
-  # TF_LOG: INFO
+  TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 211125759162
 defaults:
   run:
