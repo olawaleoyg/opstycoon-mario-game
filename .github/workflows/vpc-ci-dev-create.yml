@@ -7,9 +7,6 @@ on:
 
 env:
   AWS_ACCOUNT_NUMBER: 211125759162
-  ECR_REPOSITORY: demo-image
-  EKS_CLUSTER_NAME: education-eks-i28Saz42
-  AWS_REGION: eu-central-1
 
 # defaults:
 #   run:
@@ -69,7 +66,7 @@ jobs:
 
       - name: Build, Tag and Push Docker Image
         run: |
-          docker build -t demo-image:latest -f Dockerfile .
+          docker build -t demo-image:latest -f demo-app/components/Dockerfile .
           docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
           docker push public.ecr.aws/t5i1x5v9/demo-image:latest
 
