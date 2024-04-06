@@ -3,7 +3,7 @@ name: vpc-ci-dev-create
 on:
   push:
     branches:
-      - feat/setup-ci
+      # - feat/setup-ci
 
 env:
   AWS_ACCOUNT_NUMBER: 211125759162
