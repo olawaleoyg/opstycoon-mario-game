@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - feat/setup-ci
-    paths:
-      - "iac/terraform/vpc/*"
+    # paths:
+    #   - "iac/terraform/vpc/*"
     #   - "iac/terraform/vpc/dev/**"
 env:
   TF_LOG: INFO
