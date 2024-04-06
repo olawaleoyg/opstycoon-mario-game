@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hello-app
-        image: DOCKER_IMAGE
+        image: public.ecr.aws/t5i1x5v9/demo-image:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
