@@ -7,11 +7,14 @@ on:
 
 env:
   AWS_ACCOUNT_NUMBER: 211125759162
+  ECR_REPOSITORY: demo-image
+  EKS_CLUSTER_NAME: education-eks-i28Saz42
+  AWS_REGION: eu-central-1
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ./iac/terraform/vpc
+# defaults:
+#   run:
+#     shell: bash
+#     working-directory: ./iac/terraform/vpc
 permissions:
   contents: read
 
@@ -43,14 +46,15 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    needs: build
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
-          path: ./iac/
+          path: ./iac/chart/
 
-      - name: Change directory
-        run: cd ./iac/
+      # - name: Change directory
+      #   run: cd ./iac/
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -69,11 +73,13 @@ jobs:
           docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
           docker push public.ecr.aws/t5i1x5v9/demo-image:latest
 
+
   deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
+    needs: test
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
