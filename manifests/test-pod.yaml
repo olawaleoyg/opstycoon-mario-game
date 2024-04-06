@@ -1,0 +1,38 @@
+# hello-app-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-app
+  template:
+    metadata:
+      labels:
+        app: hello-app
+    spec:
+      containers:
+      - name: hello-app
+        image: public.ecr.aws/t5i1x5v9/demo-image:latest  # Replace this with your Docker image URL
+        ports:
+        - containerPort: 8080  # Assuming your app listens on port 8080
+
+---
+
+# hello-app-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-app-service
+spec:
+  selector:
+    app: hello-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP  # Use 'ClusterIP' if you want to access the service internally
