@@ -7,7 +7,7 @@ on:
     #   - "iac/terraform/vpc/*"
     #   - "iac/terraform/vpc/dev/**"
 env:
-  TF_LOG: INFO
+  # TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 211125759162
 defaults:
   run:
@@ -31,21 +31,22 @@ jobs:
           aws-region: eu-central-1
           role-to-assume: arn:aws:iam::${{env.AWS_ACCOUNT_NUMBER}}:role/github-actions-role
           role-session-name: Session-GitHubActions
-      - name: Get AWS Caller Identity
-        run: |
-          aws sts get-caller-identity --output json
-      - name: Login to Amazon ECR
-        run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/t5i1x5v9
+      # - name: Get AWS Caller Identity
+      #   run: |
+      #     aws sts get-caller-identity --output json
+      # - name: Login to Amazon ECR
+      #   run: |
+      #     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/t5i1x5v9
 
-      - name: Build, Tag and Push Docker Image
-        run: |
-          docker build -t demo-image:latest -f Dockerfile .
-          docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
-          docker push public.ecr.aws/t5i1x5v9/demo-image:latest
+      # - name: Build, Tag and Push Docker Image
+      #   run: |
+      #     docker build -t demo-image:latest -f Dockerfile .
+      #     docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
+      #     docker push public.ecr.aws/t5i1x5v9/demo-image:latest
 
-      - name: Push Docker image to ECR
-        run: docker push ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo:latest
+      # - name: Push Docker image to ECR
+      #   run: docker push ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo:latest
+
       # - name: Setup Terraform with specified version on the runner
       #   uses: hashicorp/setup-terraform@v2
       #   # with:
@@ -66,5 +67,5 @@ jobs:
       # - name: Terraform Plan Status
       #   if: steps.plan.outcome == 'failure'
       #   run: exit 1
-      # # - name: Terraform Apply
-      # #   run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+      # - name: Terraform Apply
+      #   run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false

@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.12"
   backend "s3" {
     bucket = "terraform-demo-oyg"
-    key = "terraform.tfstate"
+    key    = "terraform.tfstate"
     region = "eu-central-1"
   }
 }
@@ -33,7 +33,7 @@ resource "aws_subnet" "default" {
   vpc_id                  = aws_vpc.default.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone = var.aws_availability_zone
+  availability_zone       = var.aws_availability_zone
 }
 
 # A security group for the ELB so it is accessible via the web
@@ -496,12 +496,12 @@ resource "aws_iam_role_policy" "apps_codepipeline_role_policy" {
 EOF
 }
 resource "aws_s3_bucket" "cicd_bucket" {
-  bucket = var.artifacts_bucket_name
+  bucket        = var.artifacts_bucket_name
   force_destroy = true
-  acl    = "private"
+  acl           = "private"
   versioning {
-            enabled = true
-        }
+    enabled = true
+  }
 
 }
 
@@ -523,9 +523,9 @@ resource "aws_codepipeline" "infra_pipeline" {
     action {
       category = "Source"
       configuration = {
-        "BranchName"           = var.infra_project_repository_branch
+        "BranchName" = var.infra_project_repository_branch
         # "PollForSourceChanges" = "false"
-        "RepositoryName"       = var.infra_project_repository_name
+        "RepositoryName" = var.infra_project_repository_name
       }
       input_artifacts = []
       name            = "Source"
@@ -561,7 +561,7 @@ resource "aws_codepipeline" "infra_pipeline" {
               type  = "PLAINTEXT"
               value = "apply -auto-approve"
             },
-            
+
           ]
         )
         "ProjectName" = aws_codebuild_project.infraAppBuild.name
