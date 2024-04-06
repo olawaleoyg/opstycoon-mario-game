@@ -47,8 +47,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          path: ./iac/chart/
+        # with:
+        #   path: ./iac/chart/
 
       # - name: Change directory
       #   run: cd ./iac/
@@ -66,17 +66,16 @@ jobs:
 
       - name: Build, Tag and Push Docker Image
         run: |
-          docker build -t demo-image:latest -f demo-app/components/Dockerfile .
+          docker build -t demo-image:latest -f demo-app/Dockerfile .
           docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
           docker push public.ecr.aws/t5i1x5v9/demo-image:latest
-
 
   deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-    needs: test
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
