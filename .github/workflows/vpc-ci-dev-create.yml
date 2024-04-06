@@ -66,35 +66,35 @@ jobs:
 
       - name: Build, Tag and Push Docker Image
         run: |
-          docker build -t demo-image:latest -f demo-app/Dockerfile .
+          docker build -t demo-image:latest -f docker/Dockerfile .
           docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
           docker push public.ecr.aws/t5i1x5v9/demo-image:latest
 
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #     contents: read
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-        with:
-          path: ./iac/
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+  #     #   with:
+  #     #     path: ./iac/
 
-      - name: Change directory
-        run: cd ./iac/
+  #     # - name: Change directory
+  #     #   run: cd ./iac/
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-region: eu-central-1
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_NUMBER }}:role/github-actions-role
-          role-session-name: Session-GitHubActions
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v2
+  #       with:
+  #         aws-region: eu-central-1
+  #         role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_NUMBER }}:role/github-actions-role
+  #         role-session-name: Session-GitHubActions
 
-      # Add your deployment steps here
-      # For example:
-      - name: Deploy to Kubernetes
-        run: |
-          # Run your deployment commands here
-          echo "Deploying to Kubernetes..."
+  #     # Add your deployment steps here
+  #     # For example:
+  #     - name: Deploy to Kubernetes
+  #       run: |
+  #         # Run your deployment commands here
+  #         echo "Deploying to Kubernetes..."
