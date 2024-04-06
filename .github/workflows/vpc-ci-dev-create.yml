@@ -31,9 +31,9 @@ jobs:
           aws-region: eu-central-1
           role-to-assume: arn:aws:iam::${{env.AWS_ACCOUNT_NUMBER}}:role/github-actions-role
           role-session-name: Session-GitHubActions
-      # - name: Get AWS Caller Identity
-      #   run: |
-      #     aws sts get-caller-identity --output json
+      - name: Get AWS Caller Identity
+        run: |
+          aws sts get-caller-identity --output json
       # - name: Login to Amazon ECR
       #   run: |
       #     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/t5i1x5v9
