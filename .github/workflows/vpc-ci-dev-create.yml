@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - feat/setup-ci
-    # paths:
-    #   - "iac/terraform/vpc/*"
+    paths:
+      - "iac/terraform/vpc/*"
     #   - "iac/terraform/vpc/dev/**"
 env:
   # TF_LOG: INFO
@@ -38,14 +38,14 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/t5i1x5v9
 
-      - name: Build, Tag and Push Docker Image in ./another-directory
+      - name: Build, Tag and Push Docker Image
         run: |
           docker build -t demo-image:latest -f Dockerfile .
           docker tag demo-image:latest public.ecr.aws/t5i1x5v9/demo-image:latest
           docker push public.ecr.aws/t5i1x5v9/demo-image:latest
 
-      # - name: Push Docker image to ECR
-      #   run: docker push ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo:latest
+      - name: Push Docker image to ECR
+        run: docker push ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo:latest
       # - name: Setup Terraform with specified version on the runner
       #   uses: hashicorp/setup-terraform@v2
       #   # with:
